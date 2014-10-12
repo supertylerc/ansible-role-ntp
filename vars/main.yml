@@ -10,10 +10,16 @@ ntp:
     - 2.pool.ntp.org
     - 3.pool.ntp.org
   restrictions:
-    - default
-    - nomodify
-    - notrap
-    - noquery
+      v4:
+        - default
+        - nomodify
+        - notrap
+        - noquery
+      v6:
+        - default
+        - nomodify
+        - notrap
+        - noquery
   clients:
     - network: 10.49.148.0
       mask: 255.255.255.248
