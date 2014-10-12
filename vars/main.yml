@@ -1,0 +1,35 @@
+---
+
+package:
+  name: ntp
+  state: installed
+ntp:
+  servers:
+    - 0.pool.ntp.org
+    - 1.pool.ntp.org
+    - 2.pool.ntp.org
+    - 3.pool.ntp.org
+  restrictions:
+    - default
+    - nomodify
+    - notrap
+    - noquery
+  clients:
+    - network: 10.49.148.0
+      mask: 255.255.255.248
+      restrictions:
+        - nomodify
+        - nopeer
+        - notrap
+    - network: 172.30.0.0
+      mask: 255.255.255.0
+      restrictions:
+        - nomodify
+        - nopeer
+        - notrap
+    - network: 172.30.1.0
+      mask: 255.255.255.0
+      restrictions:
+        - nomodify
+        - nopeer
+        - notrap
