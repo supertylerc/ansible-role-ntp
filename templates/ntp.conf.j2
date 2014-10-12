@@ -15,7 +15,7 @@ fudge 127.127.1.0 stratum 10
 
 # This is where ntpd stores "learned" info about your clock, so that over
 # time it depends less on other servers for accurate time.
-driftfile {{ ntp.drift_file }}
+driftfile {{ ntp_driftfile }}
 
 # Restrict the server enough to make it secure, but not so much as to make it
 # not work (like the default config).
