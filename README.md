@@ -1,3 +1,5 @@
+[![Build Status](https://travis-ci.org/supertylerc/ansible-role-ntp.svg?branch=dev)](https://travis-ci.org/supertylerc/ansible-role-ntp)
+
 # ntp Ansible Role
 
 This role enables users to install and configure ntp on their hosts.
