@@ -1,8 +1,5 @@
 # {{ ansible_managed }}
 
-# Drift File Location
-driftfile {{ ntp.driftfile }}
-
 # Time Servers to Sync With
 {% for server in ntp.servers %}
 server {{ server }}
