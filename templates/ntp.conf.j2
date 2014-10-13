@@ -1,59 +1,27 @@
 # {{ ansible_managed }}
 
-driftfile {{ ntp_config_driftfile }}
-
-{% for server in ntp_config_server %}
+# Time Servers to Sync With
+{% for server in ntp.servers %}
 server {{ server }}
 {% endfor %}
 
-{% if ntp_config_statistics %}
-statistics {{ ntp_config_statistics }}
-{% endif %}
+# Leave this. It's a fallback when the other servers are inaccessable, so
+# things don't break.
+server 127.127.1.0
+fudge 127.127.1.0 stratum 10
 
-{% for filegen in ntp_config_filegen %}
-filegen {{ filegen }}
+# This is where ntpd stores "learned" info about your clock, so that over
+# time it depends less on other servers for accurate time.
+driftfile {{ ntp_driftfile }}
+
+# Restrict the server enough to make it secure, but not so much as to make it
+# not work (like the default config).
+restrict -4 {{ ntp.restrictions.v4|join(' ') }}
+restrict -6 {{ ntp.restrictions.v6|join(' ') }}
+restrict 127.0.0.1
+restrict ::1
+
+{% for client in ntp.clients %}
+restrict {{ client.network }} mask {{ client.mask }} {{ client.restrictions|join(' ') }}
 {% endfor %}
 
-{% for listen in ntp_config_listen %}
-interface listen {{ listen }}
-{% endfor %}
-
-{% for restrict in ntp_config_restrict %}
-restrict {{ restrict }}
-{% endfor %}
-
-{% if ntp_config_crypto %}
-crypto
-{% endif %}
-
-{% if ntp_config_includefile %}
-includefile  {{ ntp_config_includefile }}
-{% endif %}
-
-{% if ntp_config_keys %}
-keys {{ ntp_config_keys }}
-{% endif %}
-
-{% if ntp_config_trustedkey %}
-trustedkey {{ ntp_config_trustedkey }}
-{% endif %}
-
-{% if ntp_config_requestkey %}
-requestkey  {{ ntp_config_requestkey }}
-{% endif %}
-
-{% if ntp_config_controlkey %}
-controlkey {{ ntp_config_controlkey }}
-{% endif %}
-
-{% if ntp_config_broadcast %}
-broadcast {{ ntp_config_broadcast }}
-{% endif %}
-
-{% if ntp_config_broadcastclient %}
-broadcastclient
-{% endif %}
-
-{% if ntp_config_multicastclient %}
-multicastclient {{ ntp_config_multicastclient }}
-{% endif %}
